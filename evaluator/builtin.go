@@ -1,6 +1,10 @@
 package evaluator
 
-import "github.com/DimRev/monkey-lang/object"
+import (
+	"fmt"
+
+	"github.com/DimRev/monkey-lang/object"
+)
 
 var builtin = map[string]*object.Builtin{
 	"len": {
@@ -97,6 +101,14 @@ var builtin = map[string]*object.Builtin{
 			newElements[length] = args[1]
 
 			return &object.Array{Elements: newElements}
+		},
+	},
+	"puts": {
+		Fn: func(args ...object.Object) object.Object {
+			for _, arg := range args {
+				fmt.Println(arg.Inspect())
+			}
+			return NULL
 		},
 	},
 }
