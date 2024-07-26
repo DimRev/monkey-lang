@@ -95,6 +95,42 @@ let addTwo = fn(x){
 twice(addTwo, 2) // => 6 : addTwo(addTwo(2))
 ```
 
+```cpp
+let map = fn(arr,f){
+  let iter = fn(arr, acc) {
+    if(len(arr) == 0) {
+      acc;
+      } else {
+        iter(rest(arr), push(acc, f(first(arr))))
+      }
+    };
+  iter(arr, []);
+  };
+
+let timesTwo = fn(x) { x * 2 };
+let a = [1, 2, 3, 4];
+map(a, timesTwo) // [2, 4, 6, 8]
+
+let reduce = fn(arr, initial, f) {
+    let iter = fn(arr, result) {
+      if(len(arr) == 0) {
+        result;
+      } else {
+        iter(rest(arr), f(result, first(arr)));
+      }
+    };
+
+    iter(arr, initial);
+  };
+
+let sum = fn(arr) {
+    reduce(arr, 0, fn(initial, el) { initial + el } );
+  };
+let b = [1, 2, 3, 4, 5];
+
+sum(b) // 15
+```
+
 ### Book
 
 This project was built following the book [Writing an Interpreter in Go](https://interpreterbook.com/) by Thorsten Ball & [Writing a Compiler in Go](https://compilerbook.com/) by Thorsten Ball.
