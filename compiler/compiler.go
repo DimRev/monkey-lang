@@ -1,6 +1,8 @@
 package compiler
 
 import (
+	"fmt"
+
 	"github.com/DimRev/monkey-lang/ast"
 	"github.com/DimRev/monkey-lang/code"
 	"github.com/DimRev/monkey-lang/lexer"
@@ -45,6 +47,13 @@ func (c *Complier) Complie(node ast.Node) error {
 		err = c.Complie(node.Right)
 		if err != nil {
 			return err
+		}
+
+		switch node.Operator {
+		case "+":
+			c.emit(code.OpAdd)
+		default:
+			return fmt.Errorf("unknown operator %s", node.Operator)
 		}
 
 	case *ast.IntegerLiteral:
