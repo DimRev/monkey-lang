@@ -81,7 +81,6 @@ func (c *Complier) addInstruction(ins []byte) int {
 func (c *Complier) emit(op code.Opcode, operands ...int) int {
 	ins := code.Make(op, operands...)
 	pos := c.addInstruction(ins)
-
 	return pos
 }
 
