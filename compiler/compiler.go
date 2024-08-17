@@ -40,6 +40,21 @@ func (c *Complier) Complie(node ast.Node) error {
 		c.emit(code.OpPop)
 
 	case *ast.InfixExpression:
+		if node.Operator == "<" {
+			err := c.Complie(node.Right)
+			if err != nil {
+				return err
+			}
+
+			err = c.Complie(node.Left)
+			if err != nil {
+				return err
+			}
+
+			c.emit(code.OpGreaterThan)
+			return nil
+		}
+
 		err := c.Complie(node.Left)
 		if err != nil {
 			return err
@@ -59,6 +74,12 @@ func (c *Complier) Complie(node ast.Node) error {
 			c.emit(code.OpMul)
 		case "/":
 			c.emit(code.OpDiv)
+		case ">":
+			c.emit(code.OpGreaterThan)
+		case "==":
+			c.emit(code.OpEquals)
+		case "!=":
+			c.emit(code.OpNotEquals)
 		default:
 			return fmt.Errorf("unknown operator %s", node.Operator)
 		}

@@ -11,14 +11,22 @@ type Instructions []byte
 type Opcode byte
 
 const (
+	// Assignment Ops
 	OpConstant Opcode = iota
-	OpAdd
+	OpTrue
+	OpFalse
 	OpPop
+
+	// Arithmetic Ops
+	OpAdd
 	OpSub
 	OpMul
 	OpDiv
-	OpTrue
-	OpFalse
+
+	// Logic Ops
+	OpEquals
+	OpNotEquals
+	OpGreaterThan
 )
 
 type Definition struct {
@@ -27,14 +35,20 @@ type Definition struct {
 }
 
 var definitions = map[Opcode]*Definition{
+	// Assignments
 	OpConstant: {"OpConstant", []int{2}},
 	OpPop:      {"OpPop", []int{}},
 	OpAdd:      {"OpAdd", []int{}},
-	OpSub:      {"OpSub", []int{}},
-	OpMul:      {"OpMul", []int{}},
-	OpDiv:      {"OpDiv", []int{}},
 	OpFalse:    {"OpFalse", []int{}},
 	OpTrue:     {"OpTrue", []int{}},
+	// Arithmetic
+	OpSub: {"OpSub", []int{}},
+	OpMul: {"OpMul", []int{}},
+	OpDiv: {"OpDiv", []int{}},
+	// Logic
+	OpEquals:      {"OpEquals", []int{}},
+	OpNotEquals:   {"OpNotEquals", []int{}},
+	OpGreaterThan: {"OpGreaterThan", []int{}},
 }
 
 func Lookup(op byte) (*Definition, error) {
