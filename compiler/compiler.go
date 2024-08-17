@@ -39,6 +39,21 @@ func (c *Complier) Complie(node ast.Node) error {
 		}
 		c.emit(code.OpPop)
 
+	case *ast.PrefixExpression:
+		err := c.Complie(node.Right)
+		if err != nil {
+			return err
+		}
+
+		switch node.Operator {
+		case "!":
+			c.emit(code.OpBang)
+		case "-":
+			c.emit(code.OpMinus)
+		default:
+			return fmt.Errorf("unknown operator %s", node.Operator)
+		}
+
 	case *ast.InfixExpression:
 		if node.Operator == "<" {
 			err := c.Complie(node.Right)

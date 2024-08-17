@@ -17,13 +17,17 @@ const (
 	OpFalse
 	OpPop
 
-	// Arithmetic Ops
+	// Prefix Ops
+	OpMinus
+	OpBang
+
+	// Infix Arithmetic Ops
 	OpAdd
 	OpSub
 	OpMul
 	OpDiv
 
-	// Logic Ops
+	// Infix Logic Ops
 	OpEquals
 	OpNotEquals
 	OpGreaterThan
@@ -38,10 +42,13 @@ var definitions = map[Opcode]*Definition{
 	// Assignments
 	OpConstant: {"OpConstant", []int{2}},
 	OpPop:      {"OpPop", []int{}},
-	OpAdd:      {"OpAdd", []int{}},
 	OpFalse:    {"OpFalse", []int{}},
 	OpTrue:     {"OpTrue", []int{}},
+	// Prefix
+	OpMinus: {"OpMinus", []int{}},
+	OpBang:  {"OpBang", []int{}},
 	// Arithmetic
+	OpAdd: {"OpAdd", []int{}},
 	OpSub: {"OpSub", []int{}},
 	OpMul: {"OpMul", []int{}},
 	OpDiv: {"OpDiv", []int{}},
