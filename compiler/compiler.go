@@ -37,6 +37,7 @@ func (c *Complier) Complie(node ast.Node) error {
 		if err != nil {
 			return err
 		}
+		c.emit(code.OpPop)
 
 	case *ast.InfixExpression:
 		err := c.Complie(node.Left)
