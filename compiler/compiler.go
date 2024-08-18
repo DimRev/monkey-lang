@@ -39,6 +39,14 @@ func (c *Complier) Complie(node ast.Node) error {
 		}
 		c.emit(code.OpPop)
 
+	case *ast.BlockStatement:
+		for _, s := range node.Statements {
+			err := c.Complie(s)
+			if err != nil {
+				return err
+			}
+		}
+
 	case *ast.PrefixExpression:
 		err := c.Complie(node.Right)
 		if err != nil {
@@ -52,6 +60,19 @@ func (c *Complier) Complie(node ast.Node) error {
 			c.emit(code.OpMinus)
 		default:
 			return fmt.Errorf("unknown operator %s", node.Operator)
+		}
+
+	case *ast.IfExpression:
+		err := c.Complie(node.Condition)
+		if err != nil {
+			return err
+		}
+
+		c.emit(code.OpJumpNotTruthy, 9999)
+
+		err = c.Complie(node.Consequence)
+		if err != nil {
+			return err
 		}
 
 	case *ast.InfixExpression:
